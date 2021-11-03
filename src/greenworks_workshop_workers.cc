@@ -139,7 +139,10 @@ PublishWorkshopFileWorker::PublishWorkshopFileWorker(
 void PublishWorkshopFileWorker::Execute() {
   SteamParamStringArray_t tags;
   tags.m_nNumStrings = properties_.tags_scratch.size();
-  tags.m_ppStrings = reinterpret_cast<const char**>(&properties_.tags);
+    tags.m_ppStrings = new const char *[tags.m_nNumStrings];
+    for (int i = 0; i < tags.m_nNumStrings; ++i) {
+        tags.m_ppStrings[i] = properties_.tags_scratch[i].c_str();
+    }
 
   std::string file_name = utils::GetFileNameFromPath(properties_.file_path);
   std::string image_name = utils::GetFileNameFromPath(properties_.image_path);
