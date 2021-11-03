@@ -149,13 +149,13 @@ greenworks.ugcPublish = function(options,file_name, title, description, image_na
 // 1. Save new file and image to Steam Cloud.
 // 2. Share file and images.
 // 3. Update published file.
-greenworks.ugcPublishUpdate = function(published_file_id, file_name, title,
+greenworks.ugcPublishUpdate = function(options,published_file_id, file_name, title,
     description, image_name, success_callback, error_callback,
     progress_callback) {
   var update_published_file_process = function() {
     if (progress_callback)
       progress_callback("Completed on sharing files.");
-    greenworks.updatePublishedWorkshopFile(published_file_id,
+    greenworks.updatePublishedWorkshopFile(options,published_file_id,
         file_name, image_name, title, description,
         function() { success_callback(); },
         function(err) { error_process(err, error_callback); });

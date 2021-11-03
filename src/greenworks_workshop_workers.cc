@@ -5,7 +5,7 @@
 #include "greenworks_workshop_workers.h"
 
 #include <algorithm>
-
+#include <iostream>
 #include "nan.h"
 #include "steam/steam_api.h"
 #include "v8.h"
@@ -221,7 +221,10 @@ void UpdatePublishedWorkshopFileWorker::Execute() {
       tags.m_ppStrings = nullptr;
     } else {
       tags.m_nNumStrings = properties_.tags_scratch.size();
-      tags.m_ppStrings = reinterpret_cast<const char**>(&properties_.tags);
+        tags.m_ppStrings = new const char *[tags.m_nNumStrings];
+        for (int i = 0; i < tags.m_nNumStrings; ++i) {
+            tags.m_ppStrings[i] = properties_.tags_scratch[i].c_str();
+        }
     }
     SteamRemoteStorage()->UpdatePublishedFileTags(update_handle, &tags);
   }
